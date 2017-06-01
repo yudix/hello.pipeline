@@ -26,16 +26,15 @@ node {
         stage('get gerrit repo manifest') {
                 //git 'http://gerrit2@gerrit02.kaymera.com:8080/Nougat/platform/manifest'
                 sh '''
-                    sudo -s
                     cd /mnt/data/projects/Kaymera_Roms/Nougat
-                    repo sync
+                    sudo repo sync
                     '''
             
         }
         
         stage ('build'){
-                sh '/mnt/data/BuildScripts/copyKeys.sh Nougat'
-                sh '/mnt/data/SharedScripts/copyAndroidAppsFromSMB.sh Nougat '+ displayName
+                sh 'sudo /mnt/data/BuildScripts/copyKeys.sh Nougat'
+                sh 'sudo /mnt/data/SharedScripts/copyAndroidAppsFromSMB.sh Nougat '+ displayName
                     currentBuild.displayName = displayName + "-" + device_ver
             
         }
@@ -63,7 +62,7 @@ node {
         }
        
         stage ('undo Keys'){
-                sh '/mnt/data/BuildScripts/undoKeys.sh Nougat'
+                sh 'sudo /mnt/data/BuildScripts/undoKeys.sh Nougat'
         }
         
         stage ('email notification') {
