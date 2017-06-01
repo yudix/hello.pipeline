@@ -10,7 +10,7 @@ node {
 			        submoduleCfg: [], 
 			        userRemoteConfigs: [[url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository.git']]
 				],
-				[$class: 'GitStep', credentialsId: '50192fae-78ac-46bc-b1ed-ae63a802c0a1']
+				 credentialsId: '50192fae-78ac-46bc-b1ed-ae63a802c0a1'
 				)
 
 
