@@ -19,6 +19,7 @@ node {
         displayName = readFile('/mnt/data/smbshare/share/build_id/build-id-jenkins-nougat.txt')
     }
    echo device_ver
+}
 /**    
     tools {
         jdk 'JDK1.8'
