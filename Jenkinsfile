@@ -34,7 +34,7 @@ node {
         
         stage ('build'){
                 sh 'sudo /mnt/data/BuildScripts/copyKeys.sh Nougat'
-                sh 'sudo //mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat '+ displayName
+                sh 'sudo /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat '+ displayName
                 currentBuild.displayName = displayName + "-" + device_ver
             
         }
@@ -62,7 +62,7 @@ node {
         }
        
         stage ('undo Keys'){
-                sh 'sudo /mnt/data/BuildScripts/undoKeys.sh Nougat'
+                sh 'sudo  Nougat'
         }
         
         stage ('email notification') {
