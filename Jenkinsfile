@@ -36,8 +36,9 @@ jdk 'JDK1.8'
       sh '''
          sudo -s
          BUILD_TYPE=ondemand
-         /mnt/data/BuildScripts/copyKeys.sh Nougat'
-         /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat ''' + displayName
+         /mnt/data/BuildScripts/copyKeys.sh Nougat
+         /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat ${displayName}
+         ''' 
       currentBuild.displayName = displayName + "-" + device_ver
 
    }
