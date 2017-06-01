@@ -8,7 +8,7 @@ node {
    def displayName = readFile('/mnt/data/smbshare/share/build_id/build-id-jenkins-nougat.txt')
 //}
    echo device_ver
-
+   echo "${env.BUILD_TYPE}"
 /**    
 tools {
 jdk 'JDK1.8'
