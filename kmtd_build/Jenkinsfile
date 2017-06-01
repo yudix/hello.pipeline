@@ -1,3 +1,5 @@
 node {
-	echo 'Hello There'
+	stage ('get src from scm'){
+		git url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository.git', branch: 'master'
+	}
 }
