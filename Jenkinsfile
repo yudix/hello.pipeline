@@ -4,7 +4,7 @@ node {
    def envs =        "${env.envs}"
    def signed_from = "${env.signed_from}"
    def USE_DM_VERITY = true
-   def env.BUILD_TYPE = "ondemand"
+   env.BUILD_TYPE = "ondemand"
    def displayName = readFile('/mnt/data/smbshare/share/build_id/build-id-jenkins-nougat.txt')
 //}
    echo device_ver
