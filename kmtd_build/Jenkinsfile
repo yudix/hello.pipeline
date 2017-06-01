@@ -6,8 +6,10 @@ node {
 				url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository.git',
 				relativeTargetDirectory: '/temp'
 
-			sh 'cd /mnt/data/projects/Kaymera_Apps'
-			sh 'pwd'
+			sh '''
+			cd /mnt/data/projects/Kaymera_Apps
+			pwd
+			'''
 			// git {	
 
 			// 	wipeOutWorkspace(false)
