@@ -26,8 +26,9 @@ node {
         stage('get gerrit repo manifest') {
                 //git 'http://gerrit2@gerrit02.kaymera.com:8080/Nougat/platform/manifest'
                 sh '''
+                    sudo -s
                     cd /mnt/data/projects/Kaymera_Roms/Nougat
-                    sudo repo sync
+                    repo sync
                     '''
             
         }
