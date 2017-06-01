@@ -27,7 +27,7 @@ node {
                 //git 'http://gerrit2@gerrit02.kaymera.com:8080/Nougat/platform/manifest'
                 sh '''
                     cd /mnt/data/projects/Kaymera_Roms/Nougat
-                    sudo repo sync
+                    #sudo repo sync
                     '''
             
         }
@@ -35,7 +35,7 @@ node {
         stage ('build'){
                 sh 'sudo /mnt/data/BuildScripts/copyKeys.sh Nougat'
                 sh 'sudo /mnt/data/SharedScripts/copyAndroidAppsFromSMB.sh Nougat '+ displayName
-                    currentBuild.displayName = displayName + "-" + device_ver
+                currentBuild.displayName = currentBuild.displayName + "-" + device_ver
             
         }
         
