@@ -7,8 +7,8 @@ node {
 				relativeTargetDirectory: '/temp'
 
 			sh '''
-			cd /mnt/data/projects/Kaymera_Apps
-			pwd
+			cd /temp
+			ls -lta
 			'''
 			// git {	
 
