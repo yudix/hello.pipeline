@@ -1,10 +1,9 @@
-/**
 node {
-    stage 'Build'
-    sh 'echo "Hello World"'
+	stage ('Build') {
+		sh 'echo "Hello World"'
+	}
 }
-*/
-node {
-    stage 'checkout'
-    echo 'Checking out source code'
-}
+//node {
+//    stage 'checkout'
+ //   echo 'Checking out source code'
+//}
