@@ -7,7 +7,7 @@ node {
 				relativeTargetDirectory: '/temp'
 
 			sh '''
-			cd /temp
+			cd /tmp
 			ls -lta
 			'''
 			// git {	
