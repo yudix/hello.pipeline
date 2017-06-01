@@ -6,6 +6,7 @@ node {
 				url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository.git',
 				relativeTargetDirectory: '/mnt/data/projects/Kaymera_Apps'
 
+			echo 'Yop'
 			// git {	
 
 			// 	wipeOutWorkspace(false)
