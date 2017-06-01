@@ -34,7 +34,9 @@ jdk 'JDK1.8'
    stage ('build'){
 
       sh 'sudo /mnt/data/BuildScripts/copyKeys.sh Nougat'
-      def params =  displayName + ' ' + buildType
+      def dn = displayName.replaceAll("\\s","")
+      dn.trim()
+      def params =  dn + ' ' + buildType
       echo params
       sh 'sudo /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat ' + params
          
