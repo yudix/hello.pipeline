@@ -3,7 +3,8 @@ node {
 	stage ('starting'){
 		// scm {
 			git credentialsId: '50192fae-78ac-46bc-b1ed-ae63a802c0a1', 
-				url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository.git'
+				url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository.git',
+				relativeTargetDirectory: '/mnt/data/projects/Kaymera_Apps'
 
 			// git {	
 
