@@ -1,5 +1,17 @@
 node {
-	stage ('get src from scm'){
-		git url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository.git', branch: 'master'
-	}
+	
+	scm {
+        git {
+	            wipeOutWorkspace(true)
+	            shallowClone(true)
+	            remote {
+	                url('http://gerrit02.kaymera.com:8080/KaymeraRepository.git')
+	                branch('master')
+	            }
+	            extensions {
+	                relativeTargetDirectory('/mnt/data/projects/Kaymera_Apps')
+	            }
+            }
+        
+    }
 }
