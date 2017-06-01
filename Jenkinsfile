@@ -1,13 +1,13 @@
 
 
 node {
-    environment {
-        device_ver =  "${env.device_ver}"
-        envs =        "${env.envs}"
-        signed_from = "${env.signed_from}"
-        USE_DM_VERITY = true
-        displayName = readFile('/mnt/data/smbshare/share/build_id/build-id-jenkins-nougat.txt')
-    }
+   // environment {
+       def device_ver =  "${env.device_ver}"
+       def envs =        "${env.envs}"
+       def signed_from = "${env.signed_from}"
+       def USE_DM_VERITY = true
+       def displayName = readFile('/mnt/data/smbshare/share/build_id/build-id-jenkins-nougat.txt')
+    //}
    echo device_ver
 
 /**    
@@ -35,7 +35,7 @@ node {
         stage ('build'){
                 sh 'sudo /mnt/data/BuildScripts/copyKeys.sh Nougat'
                 sh 'sudo /mnt/data/SharedScripts/copyAndroidAppsFromSMB.sh Nougat '+ displayName
-                currentBuild.displayName = currentBuild.displayName + "-" + device_ver
+                currentBuild.displayName = displayName + "-" + device_ver
             
         }
         
