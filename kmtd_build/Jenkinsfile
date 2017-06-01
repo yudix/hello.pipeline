@@ -9,7 +9,8 @@ node {
 		}
 	}
 	stage ('build'){
-		dir(BuildScriptPath)
+		dir(BuildScriptPath){
 			sh 'build.sh'
+		}
 	}
 }
