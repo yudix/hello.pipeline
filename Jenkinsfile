@@ -25,15 +25,15 @@ jdk 'JDK1.8'
    //git 'http://gerrit2@gerrit02.kaymera.com:8080/Nougat/platform/manifest'
       sh '''
       cd /mnt/data/projects/Kaymera_Roms/Nougat
-      #sudo repo sync
+      # repo sync
       '''
    }
 
    stage ('build'){
 
-      sh 'sudo /mnt/data/BuildScripts/copyKeys.sh Nougat'
+      sh '/mnt/data/BuildScripts/copyKeys.sh Nougat'
       sh 'BUILD_TYPE=ondemand'    
-      sh 'sudo source /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat '+ displayName
+      sh 'source /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat '+ displayName
       currentBuild.displayName = displayName + "-" + device_ver
 
    }
@@ -62,7 +62,7 @@ jdk 'JDK1.8'
    }
 
    stage ('undo Keys'){
-      sh 'sudo /mnt/data/BuildScripts/undoKeys.sh Nougat'
+      sh '/mnt/data/BuildScripts/undoKeys.sh Nougat'
    }
 
    stage ('email notification') {
