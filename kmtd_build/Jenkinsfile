@@ -1,5 +1,5 @@
 def KaymeraRepositoryPath = "/mnt/data/projects/Kaymera_Apps"
-def BuildScriptPath = KaymeraRepositoryPath + "Android/Kmtd/jenkins" 
+def BuildScriptPath = KaymeraRepositoryPath + "/Android/Kmtd/jenkins" 
 node {
 	stage ('starting'){
 		dir (KaymeraRepositoryPath) {
@@ -10,7 +10,7 @@ node {
 	}
 	stage ('build'){
 		dir(BuildScriptPath){
-			sh './build.sh'
+			sh 'build.sh'
 		}
 	}
 }
