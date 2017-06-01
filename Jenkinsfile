@@ -8,7 +8,7 @@ node {
    def displayName = readFile('/mnt/data/smbshare/share/build_id/build-id-jenkins-nougat.txt')
 //}
    echo device_ver
-   echo "${env.BUILD_TYPE}"
+   echo buildType
 /**    
 tools {
 jdk 'JDK1.8'
@@ -34,7 +34,7 @@ jdk 'JDK1.8'
    stage ('build'){
 
       sh 'sudo /mnt/data/BuildScripts/copyKeys.sh Nougat'
-      sh 'sudo /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat ' + displayName + " " + buildType
+      sh 'sudo /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat ' + displayName + ' ' + buildType
          
       currentBuild.displayName = displayName + "-" + device_ver
 
