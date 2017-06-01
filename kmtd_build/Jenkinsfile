@@ -2,14 +2,25 @@ def jobName = "Hello_Job"
 node {
 	stage ('starting'){
 		// scm {
-			git credentialsId: '50192fae-78ac-46bc-b1ed-ae63a802c0a1', 
-				url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository.git',
-				relativeTargetDirectory: '/temp'
+			 checkout(
+			 	[$class: 'GitSCM', 
+			        branches: [[name: '*/master']], 
+			        doGenerateSubmoduleConfigurations: false, 
+				    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '/mnt/data/projects/Kaymera_Apps']]
+			        submoduleCfg: [], 
+			        userRemoteConfigs: [[url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository.git']]
+				],
+				[$class: 'GitStep', credentialsId: '50192fae-78ac-46bc-b1ed-ae63a802c0a1']
+				)
 
-			sh '''
-			cd /tmp
-			ls -lta
-			'''
+
+
+			// git credentialsId: '50192fae-78ac-46bc-b1ed-ae63a802c0a1', 
+			// 	url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository.git',
+			// 	relativeTargetDirectory: '/mnt/data/projects/Kaymera_Apps'
+
+			// sh 'cd /mnt/data/projects/Kaymera_Apps'
+			// sh 
 			// git {	
 
 			// 	wipeOutWorkspace(false)
