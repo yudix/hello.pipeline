@@ -34,11 +34,10 @@ jdk 'JDK1.8'
    stage ('build'){
 
       sh '''
-      sudo -s
-      BUILD_TYPE=ondemand
-      /mnt/data/BuildScripts/copyKeys.sh Nougat'
-      /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat '+ displayName
-      '''
+         sudo -s
+         BUILD_TYPE=ondemand
+         /mnt/data/BuildScripts/copyKeys.sh Nougat'
+         /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat ''' + displayName
       currentBuild.displayName = displayName + "-" + device_ver
 
    }
