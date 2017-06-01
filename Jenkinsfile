@@ -1,16 +1,6 @@
 
 
 node {
-    // stage ('user input'){
-    //     steps {
-    //         def userInput = input(
-    //          id: 'userInput', message: 'INsert input', parameters: [
-    //          [$class: 'TextParameterDefinition', defaultValue: 'sailfish', name: 'envs'],
-    //          [$class: 'TextParameterDefinition', defaultValue: 'amz,amz_stb', name: 'device_ver'],
-    //          [$class: 'TextParameterDefinition', defaultValue: '7.3195', name: 'signed_from']
-    //         ])
-    //     }
-    // }
     environment {
         device_ver =  "${env.device_ver}"
         envs =        "${env.envs}"
@@ -19,12 +9,13 @@ node {
         displayName = readFile('/mnt/data/smbshare/share/build_id/build-id-jenkins-nougat.txt')
     }
    echo device_ver
-}
+
 /**    
     tools {
         jdk 'JDK1.8'
     }
-    
+*/
+
    // agent any
     // agent {
     //     label 'AOSP'
@@ -107,4 +98,4 @@ node {
     }
     
 }
-*/
+
