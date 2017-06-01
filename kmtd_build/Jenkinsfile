@@ -1,16 +1,21 @@
-def KaymeraRepositoryPath = "/mnt/data/projects/Kaymera_Apps"
-def BuildScriptPath = KaymeraRepositoryPath + "/Android/Kmtd/jenkins" 
+def sKaymeraRepositoryPath = "/mnt/data/projects/Kaymera_Apps"
+def sBuildScriptPath = sKaymeraRepositoryPath + "/Android/Kmtd/jenkins" 
+def sGerritUrl = "http://gerrit02.kaymera.com:8080/KaymeraRepository.git"
+def sCredentialsId = "50192fae-78ac-46bc-b1ed-ae63a802c0a1"
+def sBranch = "master"
+def sCommandToRun = "./build.sh"
+
 node {
 	stage ('starting'){
-		dir (KaymeraRepositoryPath) {
-			git credentialsId: '50192fae-78ac-46bc-b1ed-ae63a802c0a1', 
-				url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository.git',
-				branch: 'master'
+		dir (sKaymeraRepositoryPath) {
+			git credentialsId: sCredentialsId, 
+				url: sGerritUrl,
+				branch: sBranch
 		}
 	}
 	stage ('build'){
-		dir(BuildScriptPath){
-			sh './build.sh'
+		dir(sBuildScriptPath){
+			sh sCommandToRun
 		}
 	}
 }
