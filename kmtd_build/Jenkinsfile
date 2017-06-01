@@ -1,16 +1,23 @@
 def jobName = "Hello_Job"
-job (jobName){
-	scm {
-		git {	
-			wipeOutWorkspace(false)
-			shallowClone(true)
-			remote {
-				url('http://gerrit02.kaymera.com:8080/KaymeraRepository.git')
-				branch('master')
-			}
-			extensions {
-				relativeTargetDirectory('/mnt/data/projects/Kaymera_Apps')
-			}
+node {
+	stage ('starting'){
+		scm {
+			git 
+				credentialsId: '50192fae-78ac-46bc-b1ed-ae63a802c0a1', 
+				url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository.git'
+
+			// git {	
+
+			// 	wipeOutWorkspace(false)
+			// 	shallowClone(true)
+			// 	remote {
+			// 		url('http://gerrit02.kaymera.com:8080/KaymeraRepository.git')
+			// 		branch('master')
+			// 	}
+			// 	extensions {
+			// 		relativeTargetDirectory('/mnt/data/projects/Kaymera_Apps')
+			// 	}
+			// }
 		}
 	}
 }
