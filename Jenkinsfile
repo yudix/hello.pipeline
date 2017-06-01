@@ -33,6 +33,7 @@ node {
         }
         
         stage ('build'){
+                sh 'BUILD_TYPE=ondemand'
                 sh 'sudo /mnt/data/BuildScripts/copyKeys.sh Nougat'
                 sh 'sudo /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat '+ displayName
                 currentBuild.displayName = displayName + "-" + device_ver
