@@ -4,7 +4,7 @@ node {
    def envs =        "${env.envs}"
    def signed_from = "${env.signed_from}"
    def USE_DM_VERITY = true
-   env.BUILD_TYPE = "ondemand"
+   def buildType = "ondemand"
    def displayName = readFile('/mnt/data/smbshare/share/build_id/build-id-jenkins-nougat.txt')
 //}
    echo device_ver
@@ -33,7 +33,8 @@ jdk 'JDK1.8'
 
    stage ('build'){
 
-      sh 'BUILD_TYPE=ondemand; sudo /mnt/data/BuildScripts/copyKeys.sh Nougat; sudo /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat ' + displayName
+      sh 'sudo /mnt/data/BuildScripts/copyKeys.sh Nougat'
+      sh 'sudo /mnt/data/projects/Infra/Jenkins/scripts/copyAndroidAppsFromSMB.sh Nougat ' + displayName + " " + buildType
          
       currentBuild.displayName = displayName + "-" + device_ver
 
