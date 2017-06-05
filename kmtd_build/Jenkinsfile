@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-echo ${WORKSPACE}
+println env.WORKSPACE
 def sKaymeraRepositoryPath = "/mnt/data/projects/Kaymera_Apps"
 def sBuildScriptPath = sKaymeraRepositoryPath + "/Android/Kmtd/jenkins" 
 def sGerritUrl = "http://gerrit02.kaymera.com:8080/KaymeraRepository.git"
