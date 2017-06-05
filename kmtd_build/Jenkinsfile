@@ -15,7 +15,7 @@ def sKmtdCertJKSPath = "/tmp/tmp.8SAZjSnLKr/debugcert.jks "
 def sKmtdCertJKSPassword = "android "
 def sKmtdSignedDestPath = "/tmp/tmp.8SAZjSnLKr/rel-signed.apk "
 def sKmtdRelUnsignedSrcPath = sKaymeraRepositoryPath + "/Android/Kmtd/app/build/outputs/apk/app-release-unsigned.apk "
-def command = sApkSignerToolPath + " sign --ks " + sKmtdCertJKSPath + " --out " + sKmtdSignedDestPath + sKmtdRelUnsignedSrcPath 
+def command = sApkSignerToolPath + " sign --ks " + sKmtdCertJKSPath + " --ks-pass pass:" + sKmtdCertJKSPassword + " --out " + sKmtdSignedDestPath + sKmtdRelUnsignedSrcPath 
 
 node {
 	stage ('Prepare'){
