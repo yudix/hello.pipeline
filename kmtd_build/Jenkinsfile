@@ -1,21 +1,60 @@
+#!/usr/bin/env groovy
+
 def sKaymeraRepositoryPath = "/mnt/data/projects/Kaymera_Apps"
 def sBuildScriptPath = sKaymeraRepositoryPath + "/Android/Kmtd/jenkins" 
 def sGerritUrl = "http://gerrit02.kaymera.com:8080/KaymeraRepository.git"
 def sCredentialsId = "50192fae-78ac-46bc-b1ed-ae63a802c0a1"
 def sBranch = "master"
-def sCommandToRun = "./build.sh"
+def sBuildCommandToRun = "./build.sh"
+def sCopyToSMB = "/mnt/data/SharedScripts/copyAMTDapp.sh"
+def sOutputFiles = [sKaymeraRepositoryPath + "/Android/Kmtd/app/build/outputs/apk/app-debug.apk",
+					sKaymeraRepositoryPath + "/Android/Kmtd/app/build/outputs/apk/app-release-unsigned.apk",
+					sKaymeraRepositoryPath + "/Android/Kmtd/app/build/outputs/mapping/release/mapping.txt"]
 
+def sApkSignerToolPath = "/mnt/data/Tools/android-sdk-linux/build-tools/25.0.1/apksigner "
+def sKmtdCertJKSPath = "/tmp/tmp.8SAZjSnLKr/debugcert.jks "
+def sKmtdCertJKSPassword = "android "
+def sKmtdSignedDestPath = "/tmp/tmp.8SAZjSnLKr/rel-signed.apk "
+def sKmtdRelUnsignedSrcPath = sKaymeraRepositoryPath + "/Android/Kmtd/app/build/outputs/apk/app-release-unsigned.apk "
+def verficationsCommands = " -v --print-certs "
+def command = sApkSignerToolPath 
+						+ " sign --ks " 
+						+ sKmtdCertJKSPath 
+						+ " --out " 
+						+ sKmtdSignedDestPath 
+						+ sKmtdRelUnsignedSrcPath 
+						+ verficationsCommands
 node {
-	stage ('starting'){
+	stage ('Prepare'){
 		dir (sKaymeraRepositoryPath) {
 			git credentialsId: sCredentialsId, 
 				url: sGerritUrl,
 				branch: sBranch
 		}
 	}
-	stage ('build'){
+
+	stage ('Build'){
 		dir(sBuildScriptPath){
-			sh sCommandToRun
+			sh sBuildCommandToRun
 		}
 	}
+
+	stage ('Verify'){
+		for (file in sOutputFiles ) {
+			if (fileExists(file)) { 
+				echo file + ' exist' 
+			} else { 
+				echo file + ' Not exist' 
+			}	
+		}
+	}
+
+	stage ('Copy to SMB'){
+		sh sCopyToSMB
+    }
+
+	stage ('Sign') {
+		sh command
+	}
+
 }
