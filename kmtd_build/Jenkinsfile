@@ -1,28 +1,23 @@
+#!/usr/bin/env groovy
 
-@NonCPS def sKaymeraRepositoryPath = "/mnt/data/projects/Kaymera_Apps"
-@NonCPS def sBuildScriptPath = sKaymeraRepositoryPath + "/Android/Kmtd/jenkins" 
-@NonCPS def sGerritUrl = "http://gerrit02.kaymera.com:8080/KaymeraRepository.git"
-@NonCPS def sCredentialsId = "50192fae-78ac-46bc-b1ed-ae63a802c0a1"
-@NonCPS def sBranch = "master"
-@NonCPS def sBuildCommandToRun = "./build.sh"
-@NonCPS def sCopyToSMB = "/mnt/data/SharedScripts/copyAMTDapp.sh"
-@NonCPS def sOutputFiles = [sKaymeraRepositoryPath + "/Android/Kmtd/app/build/outputs/apk/app-debug.apk",
+ def sKaymeraRepositoryPath = "/mnt/data/projects/Kaymera_Apps"
+ def sBuildScriptPath = sKaymeraRepositoryPath + "/Android/Kmtd/jenkins" 
+ def sGerritUrl = "http://gerrit02.kaymera.com:8080/KaymeraRepository.git"
+ def sCredentialsId = "50192fae-78ac-46bc-b1ed-ae63a802c0a1"
+ def sBranch = "master"
+ def sBuildCommandToRun = "./build.sh"
+ def sCopyToSMB = "/mnt/data/SharedScripts/copyAMTDapp.sh"
+ def sOutputFiles = [sKaymeraRepositoryPath + "/Android/Kmtd/app/build/outputs/apk/app-debug.apk",
 					sKaymeraRepositoryPath + "/Android/Kmtd/app/build/outputs/apk/app-release-unsigned.apk",
 					sKaymeraRepositoryPath + "/Android/Kmtd/app/build/outputs/mapping/release/mapping.txt"]
 
-@NonCPS def sApkSignerToolPath = "/mnt/data/Tools/android-sdk-linux/build-tools/25.0.1/apksigner "
-@NonCPS def sKmtdCertJKSPath = "/tmp/tmp.8SAZjSnLKr/debugcert.jks "
-@NonCPS def sKmtdCertJKSPassword = "android "
-@NonCPS def sKmtdSignedDestPath = "/tmp/tmp.8SAZjSnLKr/rel-signed.apk "
-@NonCPS def sKmtdRelUnsignedSrcPath = sKaymeraRepositoryPath + "/Android/Kmtd/app/build/outputs/apk/app-release-unsigned.apk "
-@NonCPS def verficationsCommands = " -v --print-certs "
-@NonCPS def command = sApkSignerToolPath 
-						+ " sign --ks " 
-						+ sKmtdCertJKSPath 
-						+ " --out " 
-						+ sKmtdSignedDestPath 
-						+ sKmtdRelUnsignedSrcPath 
-						+ verficationsCommands
+ def sApkSignerToolPath = "/mnt/data/Tools/android-sdk-linux/build-tools/25.0.1/apksigner "
+def sKmtdCertJKSPath = "/tmp/tmp.8SAZjSnLKr/debugcert.jks "
+ def sKmtdCertJKSPassword = "android "
+ def sKmtdSignedDestPath = "/tmp/tmp.8SAZjSnLKr/rel-signed.apk "
+ def sKmtdRelUnsignedSrcPath = sKaymeraRepositoryPath + "/Android/Kmtd/app/build/outputs/apk/app-release-unsigned.apk "
+ def verficationsCommands = " -v --print-certs "
+ def command = sApkSignerToolPath + " sign --ks " + sKmtdCertJKSPath + " --out " + sKmtdSignedDestPath + sKmtdRelUnsignedSrcPath + verficationsCommands
 node {
 	stage ('Prepare'){
 		dir (sKaymeraRepositoryPath) {
