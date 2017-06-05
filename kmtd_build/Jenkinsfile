@@ -1,4 +1,3 @@
-#!/usr/bin/env groovy
 
 def sKaymeraRepositoryPath = "/mnt/data/projects/Kaymera_Apps"
 def sBuildScriptPath = sKaymeraRepositoryPath + "/Android/Kmtd/jenkins" 
