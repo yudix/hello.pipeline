@@ -1,15 +1,9 @@
 node {
 	stage ('Prepare'){
-		resolveScm source: [$class: 'GitSCMSource', 
+		git poll: true,
 			credentialsId: 'd0e6bfc9-4443-4040-84b0-a2781eebedf1', 
-			excludes: '', 
-			id: '_', 
-			ignoreOnPushNotifications: false, 
-			includes: '*', 
-			rawRefSpecs: '+refs/heads/*:refs/remotes/origin/*', 
-			remote: 'http://gerrit02.kaymera.com:8080/Infrastructure.git', 
-			remoteName: 'origin'], 
-		targets: ['master']
+			url: 'http://gerrit02.kaymera.com:8080/Infrastructure.git', 
+			branch: 'master'
 	}
 	stage ('Build'){
 		sh 'echo Hello World SCM'
