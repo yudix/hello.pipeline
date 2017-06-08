@@ -1,0 +1,13 @@
+def sGitUrl = "http://10.0.50.146:8080/Nougat/platform/build"
+def sGitBranch = "*/kaymera_master2-7.1.0"
+def sScriptPath = "/mnt/data/BuildScripts/Node/set-build-id-nougat.sh" Nougat $BUILD_NUMBER
+def sScriptAospVerParameter = "Nougat" $BUILD_NUMBER
+def sScriptBuildNumberParameter = env.BUILD_NUMBER
+node {
+  stage ('Source Code Management') {
+    git url: sGitUrl, branch: sGitBranch   
+  }
+  stage ('Build') {
+    sh sScriptPath sScriptAospVerParameter sScriptBuildNumberParameter
+  }
+}
