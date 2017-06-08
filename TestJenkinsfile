@@ -1,12 +1,8 @@
 node {
   stage ('Do something') {
-  //git url: 'https://github.com/jglick/simple-maven-project-with-tests.git'
-  //def mvnHome = tool 'M3'
-  env.PATH = env+1
-  echo env.PATH
-  echo env.X
-  
+    env.PATH = env+1
+    echo env.PATH
+    echo env.X
     sh hello world 
   }
-  
 }
