@@ -23,7 +23,7 @@ node ('master'){
   
   stage('Rename build') {
     def buildName =  readFile file: sBuildIdJenkinsNougatFile
-    buildName += "-" + env.device_ver
+    buildName = buildName.trim() + "-" + env.device_ver
     echo buildName
     currentBuild.displayName = buildName
   }
