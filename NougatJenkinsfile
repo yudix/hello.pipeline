@@ -4,12 +4,23 @@ def sScriptPath = '/mnt/data/BuildScripts/Node/set-build-id-nougat.sh'
 def sScriptAospVerParameter = 'Nougat'
 def sScriptBuildNumberParameter = env.BUILD_NUMBER
 def sScriptCommand = sScriptPath + " " + sScriptAospVerParameter + " " + sScriptBuildNumberParameter
+
 node ('master'){
+  
   stage ('Source Code Management') {
       checkout scm: [$class: 'GitSCM', branches: [[name: sGitBranch]], userRemoteConfigs: [[url: sGitUrl]]]
      //git url: sGitUrl, branch: sGitBranch   
   }
+  
   stage ('Build') {
     sh sScriptCommand
   }
+  
+  stage('Rename build') {
+    def buildName =  readFile file: sBuildIdJenkinsNougatFile
+    buildName += "-" + env.device_ver
+    echo buildName
+    currentBuild.displayName = buildName
+  }
+  
 }
