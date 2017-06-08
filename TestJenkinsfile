@@ -3,6 +3,6 @@ node {
     env.PATH = env+1
     echo env.PATH
     echo env.X
-    sh hello world 
+    sh 'echo hello world'
   }
 }
