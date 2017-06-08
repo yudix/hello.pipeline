@@ -1,6 +1,5 @@
 node {
   stage ('Do something') {
-    env.PATH = env+1
     echo env.PATH
     echo env.X
     sh 'echo hello world'
