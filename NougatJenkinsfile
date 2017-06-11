@@ -28,4 +28,8 @@ node ('master'){
     currentBuild.displayName = buildName
   }
   
+  stage ('c') {
+   echo buildName
+  }
+  
 }
