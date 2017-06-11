@@ -9,6 +9,7 @@ def sScriptBuildNumberParameter = env.BUILD_NUMBER
 def sScriptCommand = sScriptPath + " " + sScriptAospVerParameter + " " + sScriptBuildNumberParameter
 // Rename build
 def sBuildIdJenkinsNougatFile = '/mnt/data/smbshare/share/build_id/build-id-jenkins-nougat.txt'
+def buildName = ""
 
 node ('master'){
   
@@ -22,7 +23,7 @@ node ('master'){
   }
   
   stage('Rename build') {
-    def buildName =  readFile file: sBuildIdJenkinsNougatFile
+    buildName = readFile file: sBuildIdJenkinsNougatFile
     buildName = buildName.trim() + "-" + env.device_ver
     echo buildName
     currentBuild.displayName = buildName
