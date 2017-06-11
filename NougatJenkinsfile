@@ -1,36 +1,65 @@
 
 // Source Code Management
-def sGitUrl = 'http://10.0.50.146:8080/Nougat/platform/build'
-def sGitBranch = '*/kaymera_master2-7.1.0'
+def GIT_URL_NOUGAT_PLATFORM_BUILD = 'http://10.0.50.146:8080/Nougat/platform/build'
+def GIT_BRANCH_NOUGAT_PLATFORM_BUILD = '*/kaymera_master2-7.1.0'
+def GIT_URL_KAYMERA_REPOSITORY = 'http://10.0.50.146:8080/KaymeraRepository.git'
+def GIT_BRANCH_KAYMERA_REPOSITORY = '*/kaymera_master-6.0.5'
+def GIT_SUB_DIR_KAYMERA_REPOSITORY = '/mnt/data/projects/Kaymera_Apps'
+def GIT_URL_INFRASTRUCTURE = 'http://10.0.50.146:8080/Infrastructure.git'
+def GIT_BRANCH_INFRASTRUCTURE = '*/master'
+def GIT_SUB_DIR_INFRASTRUCTURE = '/mnt/data/projects/Infra'
+
 // Build
-def sScriptPath = '/mnt/data/BuildScripts/Node/set-build-id-nougat.sh'
-def sScriptAospVerParameter = 'Nougat'
-def sScriptBuildNumberParameter = env.BUILD_NUMBER
-def sScriptCommand = sScriptPath + " " + sScriptAospVerParameter + " " + sScriptBuildNumberParameter
+def SCRIPT_SET_BUILD_ID_NOUGAT = '/mnt/data/BuildScripts/Node/set-build-id-nougat.sh'
+def SCRIPT_AOSP_VER_PARAMETER = 'Nougat'
+def SCRIPT_BUILD_NUMBER_PARAMETER = env.BUILD_NUMBER
+def SCRIPT_COMMAND = SCRIPT_SET_BUILD_ID_NOUGAT + " " + SCRIPT_AOSP_VER_PARAMETER + " " + SCRIPT_BUILD_NUMBER_PARAMETER
+
 // Rename build
-def sBuildIdJenkinsNougatFile = '/mnt/data/smbshare/share/build_id/build-id-jenkins-nougat.txt'
+def FILE_BUILD_ID_JENKINS_NOUGAT = '/mnt/data/smbshare/share/build_id/build-id-jenkins-nougat.txt'
+
+// Nodes
+def NODE_ANDROID_SIGNED_ALL_DEVICES = 'master'
+def NODE_KAYMERA_APPS_NOUGAT = 'BuildNode06'
+
+// Changable Variables
 def buildName = ""
 
-node ('master'){
-  
-  stage ('Source Code Management') {
-      checkout scm: [$class: 'GitSCM', branches: [[name: sGitBranch]], userRemoteConfigs: [[url: sGitUrl]]]
-     //git url: sGitUrl, branch: sGitBranch   
-  }
-  
-  stage ('Build') {
-    sh sScriptCommand
-  }
-  
-  stage('Rename build') {
-    buildName = readFile file: sBuildIdJenkinsNougatFile
-    buildName = buildName.trim() + "-" + env.device_ver
-    echo buildName
-    currentBuild.displayName = buildName
-  }
-  
-  stage ('c') {
-   echo buildName
-  }
-  
+node (NODE_ANDROID_SIGNED_ALL_DEVICES) {
+
+    stage ('Android-Signed-AllDevices: Source Code Management') {
+        checkout scm: [$class: 'GitSCM', branches: [[name: GIT_BRANCH_NOUGAT_PLATFORM_BUILD]], userRemoteConfigs: [[url: GIT_URL_NOUGAT_PLATFORM_BUILD]]]
+        //git url: sGitUrl, branch: sGitBranch   
+    }
+
+    stage ('Android-Signed-AllDevices: Build') {
+        sh SCRIPT_COMMAND
+    }
+
+    stage('Android-Signed-AllDevices: Rename build') {
+        buildName = readFile file: FILE_BUILD_ID_JENKINS_NOUGAT
+        buildName = buildName.trim() + "-" + env.device_ver
+        echo buildName
+        currentBuild.displayName = buildName
+    }
+
+}
+
+node (NODE_KAYMERA_APPS_NOUGAT) {
+
+    stage ('Kaymera-Apps-Nougat: Source Code Management') {
+        checkout scm: ([$class: 'GitSCM',
+                        branches: [[name: GIT_BRANCH_KAYMERA_REPOSITORY]],
+                        userRemoteConfigs: [[url: GIT_URL_KAYMERA_REPOSITORY]],
+                        extensions: [[$class: 'RelativeTargetDirectory',
+                                      relativeTargetDir: GIT_SUB_DIR_KAYMERA_REPOSITORY ]]
+        ])
+        checkout scm: ([$class: 'GitSCM',
+                        branches: [[name: GIT_BRANCH_INFRASTRUCTURE]],
+                        userRemoteConfigs: [[url: GIT_URL_INFRASTRUCTURE]],
+                        extensions: [[$class: 'RelativeTargetDirectory',
+                                      relativeTargetDir: GIT_SUB_DIR_INFRASTRUCTURE ]]
+        ])
+
+    }
 }
