@@ -20,7 +20,7 @@ def FILE_BUILD_ID_JENKINS_NOUGAT = '/mnt/data/smbshare/share/build_id/build-id-j
 
 // Nodes
 def NODE_ANDROID_SIGNED_ALL_DEVICES = 'master'
-def NODE_KAYMERA_APPS_NOUGAT = 'BuildNode06'
+def NODE_KAYMERA_APPS_NOUGAT = 'master' //'BuildNode06'
 
 // Changable Variables
 def buildName = ""
