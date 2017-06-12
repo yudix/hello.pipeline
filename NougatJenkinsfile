@@ -66,8 +66,16 @@ node (NODE_KAYMERA_APPS_NOUGAT) {
     
     //stage rename build
     stage ('invoke gradle script') {
-        gradle.run useWrapper: 'true', 
-        rootDir: '/mnt/data/projects/Kaymera_Apps/SharedLibraries/KCommons',
-        tasks: 'publishToMavenLocal'
+        dir ('/mnt/data/projects/Kaymera_Apps/SharedLibraries/KCommons'){
+            sh 'gradle publishToMavenLocal'
+        }
+    }
+    
+   // stage ('install android prerequisites'){
+    //
+   // }
+    
+    stage ('build kaymera apps'){
+        sh '/mnt/data/projects/Infra/Jenkins/scripts/buildKaymeraApps.sh $BUILD_DISPLAY_NAME $BUILD_TYPE'
     }
 }
