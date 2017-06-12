@@ -24,7 +24,6 @@ def NODE_KAYMERA_APPS_NOUGAT = 'master' //'BuildNode06'
 
 // Changable Variables
 def buildName = ""
-def gradle = Artifactory.newGradleBuild()
 
 node (NODE_ANDROID_SIGNED_ALL_DEVICES) {
 
