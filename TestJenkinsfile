@@ -1,4 +1,14 @@
 node {
+  stage ('start') {
+    resolveScm source: [$class: 'GitSCMSource',  
+      extensions: [[$class: 'PathRestriction', 
+        excludedRegions: 'test01/test/.*', 
+        includedRegions: 'test02/test/.*']], 
+      ignoreOnPushNotifications: false, 
+      rawRefSpecs: '+refs/heads/*:refs/remotes/origin/*', 
+      remote: 'https://github.com/yudix/hello.pipeline.git', 
+      remoteName: 'origin']
+  }
   stage ('Do something') {
     echo env.PATH
     echo env.X
