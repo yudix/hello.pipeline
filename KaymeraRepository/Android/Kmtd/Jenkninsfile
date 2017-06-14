@@ -66,7 +66,7 @@ properties([
 			script: ''], 
 			script: [classpath: [], 
 			sandbox: false, 
-			script: '''def branchesList = ["kaymera_master-6.0.5:selected"];return branchesList''']
+			script: '''def branchesList = ["kaymera_master-6.0.5"];return branchesList''']
 			]
 		]
 		]),
@@ -75,6 +75,7 @@ properties([
 
 node {
 	stage('checkout KaymeraRepository'){
+	echo 'branch name '+env.KAYMERA_REPOSITORY_BRANCH
 		resolveScm source: [$class: 'GitSCMSource', 
 				extensions: [[$class: 'RelativeTargetDirectory', 
 					relativeTargetDir: '/mnt/data/projects/Kaymera_Apps']], 
