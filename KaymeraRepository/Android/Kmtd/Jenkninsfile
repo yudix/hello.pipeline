@@ -1,3 +1,8 @@
+def KAYMERA_REPOSITORY_URL = 'http://gerrit02.kaymera.com:8080/KaymeraRepository'
+def KAYMERA_REPOSITORY_SUB_DIR = '/mnt/data/projects/Kaymera_Apps'
+def KMTD_HOME = KAYMERA_REPOSITORY_SUB_DIR + '/Android/Kmtd'
+def jobTypes = ['continues','release']
+
 properties([
 	[$class: 'JobRestrictionProperty'], 
 	parameters(
@@ -15,7 +20,7 @@ properties([
 				script: ''], 
 				script: [classpath: [],
 				sandbox: false, 
-				script: 'def jobTypes = [\'continues\',\'release\']; return jobTypes'
+				script: jobTypes
 					]
 				]
 		], 
@@ -72,9 +77,9 @@ node {
 	echo 'branch name '+env.KAYMERA_REPOSITORY_BRANCH
 	checkout scm: ([$class: 'GitSCM',
                         branches: [[name: env.KAYMERA_REPOSITORY_BRANCH]],
-                        userRemoteConfigs: [[url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository']],
+                        userRemoteConfigs: [[url: KAYMERA_REPOSITORY_URL]],
                         extensions: [[$class: 'RelativeTargetDirectory',
-                                      relativeTargetDir: '/mnt/data/projects/Kaymera_Apps' ]]
+                                      relativeTargetDir: KAYMERA_REPOSITORY_SUB_DIR ]]
        	 		])
 	}
 	stage ('Kick the build script') {
