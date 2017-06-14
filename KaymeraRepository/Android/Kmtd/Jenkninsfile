@@ -85,11 +85,11 @@ node {
 	}
 	
 	stage ('Kick the build script') {
+		def command = 'exit 1'
 		if (env.JOB_TYPE == 'continues' ){
-			echo env.JOB_TYPE
-			def command = BUILD_SCRIPT + ' ' + env.JOB_TYPE
+			command = BUILD_SCRIPT + ' ' + env.JOB_TYPE
 		}else if (env.JOB_TYPE == 'release' ){
-			def command = BUILD_SCRIPT + ' ' + env.JOB_TYPE
+			command = BUILD_SCRIPT + ' ' + env.JOB_TYPE
 		}else {
 			echo 'Error, select build type'
 		}
