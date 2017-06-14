@@ -1,7 +1,7 @@
 def KAYMERA_REPOSITORY_URL = 'http://gerrit02.kaymera.com:8080/KaymeraRepository'
 def KAYMERA_REPOSITORY_SUB_DIR = '/mnt/data/projects/Kaymera_Apps'
 def KMTD_HOME = KAYMERA_REPOSITORY_SUB_DIR + '/Android/Kmtd'
-def jobTypes = ['continues','release']
+def BUILD_SCRIPT = KMTD_HOME + '/jenkins/build.sh'
 
 properties([
 	[$class: 'JobRestrictionProperty'], 
@@ -20,7 +20,7 @@ properties([
 				script: ''], 
 				script: [classpath: [],
 				sandbox: false, 
-				script: jobTypes
+				script: 'def jobTypes = [\'continues\',\'release\']; return jobTypes'
 					]
 				]
 		], 
@@ -65,7 +65,7 @@ properties([
 			script: ''], 
 			script: [classpath: [], 
 			sandbox: false, 
-			script: '''def branchesList = ["kaymera_master-6.0.5"];return branchesList''']
+			script: '''def branchesList = [\'master\',\'release/<release name>\'];return branchesList''']
 			]
 		]
 		]),
@@ -85,11 +85,38 @@ node {
 	stage ('Kick the build script') {
 		if (env.JOB_TYPE == 'continues' ){
 			echo env.JOB_TYPE
+			def command = BUILD_SCRIPT + ' ' + env.JOB_TYPE
+			echo command
 		}else if (env.JOB_TYPE == 'release' ){
-			echo env.JOB_TYPE
+			def command = BUILD_SCRIPT + ' ' + env.JOB_TYPE
+			echo command
 		}else {
-			echo env.JOB_TYPE
+			echo 'Error, select build type'
 		}
 		
+	}
+	stage ('Sign APK using upload key, the signed APK name should be suffixed with signedUploadKey') {
+		def versionName = readFile file: KMTD_HOME + '/app/version.properties'
+		echo versionName
+		String[] lines = text.split("\\n");
+		versionName = lines[1];
+		env.VERSION_NAME = versionName
+		echo env.VERSION_NAME
+		def versionCode = readFile file: KMTD_HOME + '/verCode_tmp.properties'
+		env.VERSION_CODE = versionCode
+		echo env.VERSION_CODE
+		env.JKS_PATH = '/tmp/amtd-upload-cert.jks'
+		echo env.JKS_PATH
+		def command = '''
+SMB_OUT_PATH="${SMB_PATH}/apps/android/${VERSION_NAME}/${JOB_TYPE}/${VERSION_CODE}/${ENV}";
+BUILD_OUT_PATH="${KMTD_HOME}/app/build/outputs/apk";
+mkdir -p ${OUT_PATH};
+FILE_BASIC_NAME="ciplerwatch-${VERSION_NAME}.${VERSION_CODE}-${TYPE}-${ENV}";
+FROM="/${FILE_BASIC_NAME}-signedUploadKey.apk";
+TO="${SMB_OUT_PATH}/${FILE_BASIC_NAME}.apk";
+apksigner sign --ks ${JKS_PATH} --out ${FROM} ${TO}
+		'''
+		echo command
+		sh command
 	}
 }
