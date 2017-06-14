@@ -1,3 +1,4 @@
+properties([pipelineTriggers([pollSCM('')])])
 node {
   stage ('SCM') {
     resolveScm source: [$class: 'GitSCMSource', 
