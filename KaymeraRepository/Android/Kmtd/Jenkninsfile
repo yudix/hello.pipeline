@@ -62,7 +62,16 @@ properties([
 	])
 
 node {
-	stage('test'){
-		sh 'env'
+	stage('checkout KaymeraRepository'){
+		resolveScm source: [$class: 'GitSCMSource', 
+				extensions: [[$class: 'RelativeTargetDirectory', 
+					relativeTargetDir: '/mnt/data/projects/Kaymera_Apps']], 
+				id: '_', 
+				ignoreOnPushNotifications: false, 
+				includes: '*', 
+				rawRefSpecs: '+refs/heads/*:refs/remotes/origin/*', 
+				remote: 'http://gerrit02.kaymera.com:8080/KaymeraRepository', 
+				remoteName: 'origin'], 
+			targets: ['*/$KAYMERA_REPOSITORY_BRANCH']
 	}
 }
