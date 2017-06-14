@@ -1,18 +1,68 @@
-properties([[$class: 'BuildBlockerProperty', blockLevel: <object of type hudson.plugins.buildblocker.BuildBlockerProperty.BlockLevel>, blockingJobs: '', scanQueueFor: <object of type hudson.plugins.buildblocker.BuildBlockerProperty.QueueScanScope>, useBuildBlocker: false], [$class: 'JobRestrictionProperty'], parameters([[$class: 'CascadeChoiceParameter', choiceType: 'PT_SINGLE_SELECT', description: '''
-Select a Job type
+properties([
+	[$class: 'BuildBlockerProperty', 
+	//blockLevel: <object of type hudson.plugins.buildblocker.BuildBlockerProperty.BlockLevel>, 
+	blockingJobs: '', 
+	//scanQueueFor: <object of type hudson.plugins.buildblocker.BuildBlockerProperty.QueueScanScope>, 
+	useBuildBlocker: false], 
 
-''', filterable: false, name: 'JOB_TYPE', randomName: 'choice-parameter-3883234084844795', referencedParameters: '', script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: ''], script: [classpath: [], sandbox: false, script: 'def jobTypes = [\'continues\',\'release\']']]], [$class: 'CascadeChoiceParameter', choiceType: 'PT_SINGLE_SELECT', description: '''
-Select a Type
-
-''', filterable: false, name: 'TYPE', randomName: 'choice-parameter-3883234086893611', referencedParameters: '', script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: ''], script: [classpath: [], sandbox: false, script: '''def types = [\'release\',\'debug\']
-return types''']]], [$class: 'CascadeChoiceParameter', choiceType: 'PT_SINGLE_SELECT', description: '''
-Select a Env
-
-''', filterable: false, name: 'ENV', randomName: 'choice-parameter-3883234088581932', referencedParameters: '', script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: ''], script: [classpath: [], sandbox: false, script: '''def envs = [\'prod\',\'stb\',\'dev\',\'demo\']
-return envs''']]]]), pipelineTriggers([])])
+	[$class: 'JobRestrictionProperty'], 
+	parameters(
+		[
+		[$class: 'CascadeChoiceParameter', 
+		choiceType: 'PT_SINGLE_SELECT', 
+		description: '''\nSelect a Job type\n''', 
+		filterable: false, 
+		name: 'JOB_TYPE', 
+		randomName: 'choice-parameter-3883234084844795', 
+		referencedParameters: '', 
+		script: [$class: 'GroovyScript', 
+			fallbackScript: [classpath: [], 
+				sandbox: false, 
+				script: ''], 
+				script: [classpath: [],
+				sandbox: false, 
+				script: 'def jobTypes = [\'continues\',\'release\']; return jobTypes'
+					]
+				]
+		], 
+		[$class: 'CascadeChoiceParameter', 
+		choiceType: 'PT_SINGLE_SELECT', 
+		description: '''\nSelect a Type\n''', 
+		filterable: false, 
+		name: 'TYPE', 
+		randomName: 'choice-parameter-3883234086893611', 
+		referencedParameters: '', 
+		script: [$class: 'GroovyScript', 
+			fallbackScript: [classpath: [], 
+				sandbox: false, 
+				script: ''], 
+				script: [classpath: [], 
+				sandbox: false, 
+				script: '''def types = [\'release\',\'debug\'];return types''']
+				]
+		], 
+		[$class: 'CascadeChoiceParameter', 
+		choiceType: 'PT_SINGLE_SELECT', 
+		description: '''\nSelect a Env\n''', 
+		filterable: false, 
+		name: 'ENV', 
+		randomName: 'choice-parameter-3883234088581932', 
+		referencedParameters: '', 
+		script: [$class: 'GroovyScript', 
+			fallbackScript: [classpath: [], 
+			sandbox: false, 
+			script: ''], 
+			script: [classpath: [], 
+			sandbox: false, 
+			script: '''def envs = [\'prod\',\'stb\',\'dev\',\'demo\'];return envs''']
+			]
+		]
+		]), 
+	pipelineTriggers([])
+	])
 
 node {
-stage('test'){
-sh 'env'
-}
+	stage('test'){
+		sh 'env'
+	}
 }
