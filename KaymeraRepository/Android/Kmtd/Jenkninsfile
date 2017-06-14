@@ -77,4 +77,14 @@ node {
                                       relativeTargetDir: '/mnt/data/projects/Kaymera_Apps' ]]
        	 		])
 	}
+	stage ('Kick the build script') {
+		if (env.JOB_TYPE == 'continues' ){
+			echo env.JOB_TYPE
+		}else if (env.JOB_TYPE == 'release' ){
+			echo env.JOB_TYPE
+		}else {
+			echo env.JOB_TYPE
+		}
+		
+	}
 }
