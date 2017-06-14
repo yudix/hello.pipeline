@@ -57,7 +57,24 @@ properties([
 			script: '''def envs = [\'prod\',\'stb\',\'dev\',\'demo\'];return envs''']
 			]
 		]
-		]), 
+		]),
+		[$class: 'CascadeChoiceParameter', 
+		choiceType: 'PT_SINGLE_SELECT', 
+		description: '''\nSelect a KaymerRepository Branch\n''', 
+		filterable: false, 
+		name: 'KAYMERA_REPOSITORY_BRANCH', 
+		randomName: 'choice-parameter-3883234088581932', 
+		referencedParameters: '', 
+		script: [$class: 'GroovyScript', 
+			fallbackScript: [classpath: [], 
+			sandbox: false, 
+			script: ''], 
+			script: [classpath: [], 
+			sandbox: false, 
+			script: '''def branchesList = ["kaymera_master-6.0.5:selected"];return branchesList''']
+			]
+		]
+		]),
 	pipelineTriggers([])
 	])
 
@@ -72,6 +89,6 @@ node {
 				rawRefSpecs: '+refs/heads/*:refs/remotes/origin/*', 
 				remote: 'http://gerrit02.kaymera.com:8080/KaymeraRepository', 
 				remoteName: 'origin'], 
-			targets: ['*/$KAYMERA_REPOSITORY_BRANCH']
+			targets: [env.KAYMERA_REPOSITORY_BRANCH]
 	}
 }
