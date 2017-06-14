@@ -1,6 +1,6 @@
 node {
   stage ('SCM') {
-    rresolveScm source: [$class: 'GitSCMSource', 
+    resolveScm source: [$class: 'GitSCMSource', 
       credentialsId: '', 
       excludes: '', 
      extensions: [[$class: 'PathRestriction', excludedRegions: 'test01/test/.*', includedRegions: 'test02/test/.*']], 
