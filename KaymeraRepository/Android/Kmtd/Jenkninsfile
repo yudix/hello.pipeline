@@ -73,7 +73,8 @@ properties([
 	])
 
 node {
-	stage('checkout KaymeraRepository'){
+
+	stage('checkout KaymeraRepository') {
 	echo 'branch name '+env.KAYMERA_REPOSITORY_BRANCH
 	checkout scm: ([$class: 'GitSCM',
                         branches: [[name: env.KAYMERA_REPOSITORY_BRANCH]],
@@ -82,19 +83,20 @@ node {
                                       relativeTargetDir: KAYMERA_REPOSITORY_SUB_DIR ]]
        	 		])
 	}
+	
 	stage ('Kick the build script') {
 		if (env.JOB_TYPE == 'continues' ){
 			echo env.JOB_TYPE
 			def command = BUILD_SCRIPT + ' ' + env.JOB_TYPE
-			echo command
 		}else if (env.JOB_TYPE == 'release' ){
 			def command = BUILD_SCRIPT + ' ' + env.JOB_TYPE
-			echo command
 		}else {
 			echo 'Error, select build type'
 		}
-		
+		echo command
+		sh command
 	}
+	
 	stage ('Sign APK using upload key, the signed APK name should be suffixed with signedUploadKey') {
 		def versionName = readFile file: KMTD_HOME + '/app/version.properties'
 		echo versionName
