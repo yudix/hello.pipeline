@@ -1,27 +1,3 @@
-device_ver=$device_ver
-USER_DEBUG=$USER_DEBUG
-envs=$envs
-signed_from=$signed_from
-BUILD_TYPE=$BUILD_TYPE
-BRANDING=$BRANDING
-KPHONE_BUILD=$KPHONE_BUILD
-KAYMERA_REPOSITORY_BRANCH=$KAYMERA_REPOSITORY_BRANCH
-INFRASTRUCTURE_BRANCH=$INFRASTRUCTURE_BRANCH
-AOSP_BRANCH=$AOSP_BRANCH
-
-
-resolveScm source: [$class: 'GitSCMSource', 
-		extensions: [[$class: 'RelativeTargetDirectory', 
-			relativeTargetDir: '/mnt/data/projects/Kaymera_Apps']], 
-		id: '_', 
-		ignoreOnPushNotifications: false, 
-		includes: '*', 
-		rawRefSpecs: '+refs/heads/*:refs/remotes/origin/*', 
-		remote: 'http://gerrit02.kaymera.com:8080/KaymeraRepository', 
-		remoteName: 'origin'], 
-	targets: ['*/$KAYMERA_REPOSITORY_BRANCH']
-
-
 properties([
 	[$class: 'BuildBlockerProperty', 
 	//blockLevel: <object of type hudson.plugins.buildblocker.BuildBlockerProperty.BlockLevel>, 
