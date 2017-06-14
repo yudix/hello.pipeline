@@ -1,3 +1,7 @@
+def GIT_URL_KAYMERA_REPOSITORY = 'http://10.0.50.146:8080/KaymeraRepository.git'
+def GIT_BRANCH_KAYMERA_REPOSITORY = '*/kaymera_master-6.0.5'
+def GIT_SUB_DIR_KAYMERA_REPOSITORY = '/mnt/data/projects/Kaymera_Apps'
+
 properties([
 	[$class: 'BuildBlockerProperty', 
 	//blockLevel: <object of type hudson.plugins.buildblocker.BuildBlockerProperty.BlockLevel>, 
@@ -76,15 +80,11 @@ properties([
 node {
 	stage('checkout KaymeraRepository'){
 	echo 'branch name '+env.KAYMERA_REPOSITORY_BRANCH
-		resolveScm source: [$class: 'GitSCMSource', 
-				extensions: [[$class: 'RelativeTargetDirectory', 
-					relativeTargetDir: '/mnt/data/projects/Kaymera_Apps']], 
-				id: '_', 
-				ignoreOnPushNotifications: false, 
-				includes: '*', 
-				rawRefSpecs: '+refs/heads/*:refs/remotes/origin/*', 
-				remote: 'http://gerrit02.kaymera.com:8080/KaymeraRepository', 
-				remoteName: 'origin'], 
-			targets: [env.KAYMERA_REPOSITORY_BRANCH]
+	checkout scm: ([$class: 'GitSCM',
+                        branches: [[name: env.KAYMERA_REPOSITORY_BRANCH]],
+                        userRemoteConfigs: [[url: 'http://gerrit02.kaymera.com:8080/KaymeraRepository']],
+                        extensions: [[$class: 'RelativeTargetDirectory',
+                                      relativeTargetDir: '/mnt/data/projects/Kaymera_Apps' ]]
+       	 		])
 	}
 }
