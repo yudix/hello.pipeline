@@ -3,7 +3,7 @@ node {
     resolveScm source: [$class: 'GitSCMSource', 
       credentialsId: '', 
       excludes: '', 
-     extensions: [[$class: 'PathRestriction', excludedRegions: 'test01/test/.*', includedRegions: 'test02/test/.*']], 
+     extensions: [[$class: 'PathRestriction', excludedRegions: 'test01/test/*', includedRegions: 'test02/test/*']], 
       id: '_', 
       ignoreOnPushNotifications: false, 
       includes: '*', 
