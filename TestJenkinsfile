@@ -1,12 +1,15 @@
 node {
   stage ('SCM') {
-    resolveScm source: [$class: 'GitSCMSource', 
+    rresolveScm source: [$class: 'GitSCMSource', 
+      credentialsId: '', 
+      excludes: '', 
      extensions: [[$class: 'PathRestriction', excludedRegions: 'test01/test/.*', includedRegions: 'test02/test/.*']], 
+      id: '_', 
       ignoreOnPushNotifications: false, 
       includes: '*', 
       rawRefSpecs: '+refs/heads/*:refs/remotes/origin/*', 
       remote: 'https://github.com/yudix/hello.pipeline.git', 
-      remoteName: 'origin'],
+      remoteName: 'origin'], 
    targets: [ 'master']
 }
  
