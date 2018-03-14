@@ -1,5 +1,5 @@
 node {
-  stage {
+  stage (my first stage name) {
     echo 'Hello World'
   }
 }
